@@ -1,0 +1,27 @@
+{
+  "indices": [
+    {
+      "id": "com.example.FooTest",
+      "testClass": "com.example.FooTest",
+      "issues": [],
+      "displayName": "Foo Test",
+      "state": "Passed",
+      "children": [
+        {
+          "id": "com.example.FooTest:passes",
+          "testMethod": "passes",
+          "issues": [],
+          "displayName": "the happy path passes",
+          "state": "Passed"
+        },
+        {
+          "id": "com.example.FooTest:fails",
+          "testMethod": "fails",
+          "issues": [],
+          "displayName": "the unhappy path fails",
+          "state": "Failed"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "testClass": "com.example.FooTest",
+  "displayName": "Foo Test",
+  "state": "Passed",
+  "packageName": "com.example",
+  "tests": [
+    {
+      "elapsedTime": "5 Ms",
+      "testMethod": "passes",
+      "displayName": "the happy path passes",
+      "state": "Passed",
+      "invocations": [
+        {
+          "elapsedTime": "5 Ms",
+          "state": "Passed",
+          "displayName": "the happy path passes",
+          "sentences": [],
+          "executionException": {}
+        }
+      ]
+    }
+  ]
+}

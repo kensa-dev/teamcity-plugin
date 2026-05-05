@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<teamcity-plugin>
+    <info>
+        <name>kensa-teamcity-plugin</name>
+        <display-name>Kensa Integration</display-name>
+        <version>0.1.0</version>
+        <description>Surfaces Kensa BDD test reports inside TeamCity: per-build report tab, first-class test results, Given-When-Then failure summaries.</description>
+        <email>noreply@kensa.dev</email>
+        <vendor>
+            <name>Kensa</name>
+            <url>https://github.com/kensa-dev</url>
+        </vendor>
+    </info>
+    <requirements min-build="98000"/>
+    <deployment use-separate-classloader="true"/>
+</teamcity-plugin>

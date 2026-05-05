@@ -4,3 +4,4 @@ build/
 *.iml
 .DS_Store
 docker/data/
+Clearwave_*.raw.zip

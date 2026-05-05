@@ -1,9 +1,3 @@
-rootProject.name = "kensa-teamcity-plugin"
-
-include("common")
-include("server")
-include("agent")
-
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -17,3 +11,9 @@ dependencyResolutionManagement {
         maven("https://download.jetbrains.com/teamcity-repository")
     }
 }
+
+rootProject.name = "kensa-teamcity-plugin"
+
+include("common")
+include("server")
+include("agent")

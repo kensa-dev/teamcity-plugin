@@ -1,0 +1,30 @@
+services:
+  teamcity-server:
+    image: jetbrains/teamcity-server:2025.07
+    container_name: kensa-tc-server
+    ports:
+      - "8111:8111"
+    volumes:
+      - ./data/server:/data/teamcity_server/datadir
+      - ./data/server-logs:/opt/teamcity/logs
+      # Mount only the plugin zip (not the whole plugins dir) so TC can still
+      # write .bundledTools/ etc. into the writable datadir.
+      - ../server/build/distributions/kensa-teamcity-plugin.zip:/data/teamcity_server/datadir/plugins/kensa-teamcity-plugin.zip:ro
+
+  teamcity-agent:
+    image: jetbrains/teamcity-agent:2025.07
+    container_name: kensa-tc-agent
+    privileged: true
+    environment:
+      SERVER_URL: http://teamcity-server:8111
+      AGENT_NAME: kensa-dev-agent
+    volumes:
+      - ./data/agent:/data/teamcity_agent/conf
+      - ${KENSA_EXAMPLE_PATH:?set KENSA_EXAMPLE_PATH to your local clearwave-example checkout}:/sample-projects/clearwave-example
+      # Share the host's Maven local + Gradle caches so Kensa's gradle plugin
+      # (published locally with `publishToMavenLocal`) is resolvable, and
+      # gradle distributions don't have to re-download every build.
+      - ${HOME}/.m2:/home/buildagent/.m2
+      - ${HOME}/.gradle:/home/buildagent/.gradle
+    depends_on:
+      - teamcity-server

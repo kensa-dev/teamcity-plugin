@@ -1,0 +1,52 @@
+{
+  "testClass": "com.example.FooTest",
+  "displayName": "Foo Test",
+  "state": "Failed",
+  "packageName": "com.example",
+  "tests": [
+    {
+      "elapsedTime": "12 Ms",
+      "testMethod": "fails",
+      "displayName": "the unhappy path fails",
+      "state": "Failed",
+      "invocations": [
+        {
+          "elapsedTime": "12 Ms",
+          "state": "Failed",
+          "displayName": "the unhappy path fails",
+          "sentences": [
+            {
+              "lineNumber": 10,
+              "tokens": [
+                { "types": ["tk-kw"], "value": "Given" },
+                { "types": ["tk-wd"], "value": " a customer with overdraft of " },
+                { "types": ["tk-fx"], "value": "£500" },
+                { "types": ["tk-nl"], "value": "" }
+              ]
+            },
+            {
+              "lineNumber": 11,
+              "tokens": [
+                { "types": ["tk-kw"], "value": "When" },
+                { "types": ["tk-wd"], "value": " they request a withdrawal of " },
+                { "types": ["tk-fx"], "value": "£600" },
+                { "types": ["tk-nl"], "value": "" }
+              ]
+            },
+            {
+              "lineNumber": 12,
+              "tokens": [
+                { "types": ["tk-kw"], "value": "Then" },
+                { "types": ["tk-wd"], "value": " withdrawal is rejected" }
+              ]
+            }
+          ],
+          "executionException": {
+            "message": "expected: rejected but was: approved",
+            "stackTrace": "at com.example.FooTest.fails(FooTest.kt:12)\nat jdk.internal.reflect.GeneratedMethodAccessor.invoke(...)"
+          }
+        }
+      ]
+    }
+  ]
+}
