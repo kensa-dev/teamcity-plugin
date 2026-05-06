@@ -6,11 +6,18 @@ plugins {
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.teamcity.server) apply false
     alias(libs.plugins.teamcity.agent) apply false
+    alias(libs.plugins.changelog)
 }
 
 allprojects {
     group = "dev.kensa.teamcity"
     version = "0.1.0"
+}
+
+changelog {
+    repositoryUrl = "https://github.com/kensa-dev/teamcity-plugin"
+    versionPrefix = ""
+    groups.empty()
 }
 
 // ---------- Local docker dev harness ----------

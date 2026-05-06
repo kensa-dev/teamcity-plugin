@@ -5,6 +5,7 @@ gson = "2.11.0"
 junit = "5.11.3"
 junit-platform = "1.11.3"
 rodm-teamcity = "1.5.5"
+changelog = "2.4.0"
 
 [libraries]
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -16,3 +17,4 @@ junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 teamcity-server = { id = "io.github.rodm.teamcity-server", version.ref = "rodm-teamcity" }
 teamcity-agent = { id = "io.github.rodm.teamcity-agent", version.ref = "rodm-teamcity" }
+changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
