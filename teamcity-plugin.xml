@@ -4,7 +4,29 @@
         <name>kensa-teamcity-plugin</name>
         <display-name>Kensa Integration</display-name>
         <version>0.1.0</version>
-        <description>Surfaces Kensa BDD test reports inside TeamCity: per-build report tab, first-class test results, Given-When-Then failure summaries.</description>
+        <description><![CDATA[
+            Surfaces Kensa BDD test reports inside TeamCity.
+
+            Three features, all behind a single opt-in build feature:
+
+            • Kensa Report tab — embeds the Kensa HTML site as a per-build tab
+              with an "Open in new tab" link for full-page rendering.
+            • First-class test results — each Kensa test surfaces in TeamCity's
+              Tests UI by its human-readable Given-When-Then display name, joining
+              the standard history graphs, flaky-test detection, and trends.
+            • Failure summaries — when a Kensa test fails, the Given-When-Then
+              narrative + captured values + exception is attached inline as the
+              test's failure detail in the Tests tab — exactly where you land
+              when triaging a red build.
+
+            Frictionless: drop in the build feature, run a build that produces
+            Kensa output, and all three surfaces light up. No paths to configure
+            for the common single-sourceset case.
+
+            Source: https://github.com/kensa-dev/teamcity-plugin
+            Kensa:  https://github.com/kensa-dev/kensa
+        ]]></description>
+        <download-url>https://github.com/kensa-dev/teamcity-plugin/releases</download-url>
         <email>noreply@kensa.dev</email>
         <vendor>
             <name>Kensa</name>
