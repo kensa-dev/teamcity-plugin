@@ -11,7 +11,7 @@ plugins {
 
 allprojects {
     group = "dev.kensa.teamcity"
-    version = "0.1.0"
+    version = "0.3.0"
 }
 
 changelog {
@@ -96,13 +96,13 @@ tasks.register<JavaExec>("signPlugin") {
         classpath = files(signerJarFile.get())
         args = mutableListOf(
             "sign",
-            "--in", unsigned.asFile.absolutePath,
-            "--out", signed.get().absolutePath,
-            "--key", keyFile.absolutePath,
-            "--cert", certFile.absolutePath,
+            "-in", unsigned.asFile.absolutePath,
+            "-out", signed.get().absolutePath,
+            "-key-file", keyFile.absolutePath,
+            "-cert-file", certFile.absolutePath,
         ).also {
             if (passEnv.isPresent && passEnv.get().isNotBlank()) {
-                it += listOf("--key-pass", passEnv.get())
+                it += listOf("-key-pass", passEnv.get())
             }
         }
     }
@@ -153,6 +153,9 @@ tasks.register<PublishPluginTask>("publishPlugin") {
     description = "Uploads the signed plugin to JetBrains Marketplace (reads PUBLISH_TOKEN env var)."
     dependsOn("signPlugin")
     signedZip.set(signedPluginArchive)
-    xmlId.set("kensa-teamcity-plugin")
+    // Marketplace stores TC plugins with a `teamcity_` xmlId prefix (namespace
+    // separate from IntelliJ plugins). The plugin descriptor's `<name>` stays
+    // bare; only the marketplace upload needs the prefix.
+    xmlId.set("teamcity_kensa-teamcity-plugin")
     publishToken.set(providers.environmentVariable("PUBLISH_TOKEN"))
 }

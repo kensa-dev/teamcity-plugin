@@ -6,4 +6,5 @@ object KensaConstants {
     const val PARAM_REPORT_TAB = "kensa.feature.reportTab"
     const val PARAM_TEST_REPORTER = "kensa.feature.testReporter"
     const val PARAM_FAILURE_SUMMARY = "kensa.feature.failureSummary"
+    const val REPORT_START_PAGE = "kensa-site/index.html"
 }

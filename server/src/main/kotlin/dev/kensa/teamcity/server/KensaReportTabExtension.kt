@@ -1,5 +1,6 @@
 package dev.kensa.teamcity.server
 
+import dev.kensa.teamcity.KensaConstants.REPORT_START_PAGE
 import jetbrains.buildServer.serverSide.SBuild
 import jetbrains.buildServer.serverSide.SBuildServer
 import jetbrains.buildServer.web.openapi.ArtifactsViewTab
@@ -8,8 +9,6 @@ import jetbrains.buildServer.web.openapi.PluginDescriptor
 import jetbrains.buildServer.web.openapi.ReportTabsIsolationProtection
 import jetbrains.buildServer.web.reportTabs.ReportTabUtil
 import javax.servlet.http.HttpServletRequest
-
-private const val START_PAGE = "kensa-site/index.html"
 
 /**
  * Extends ArtifactsViewTab so TeamCity treats the Kensa report as a registered HTML report
@@ -30,10 +29,10 @@ class KensaReportTabExtension(
 
     override fun fillModel(model: MutableMap<String, Any>, request: HttpServletRequest, build: SBuild) {
         super.fillModel(model, request, build)
-        model["startPage"] = START_PAGE
+        model["startPage"] = REPORT_START_PAGE
         model["buildData"] = build
     }
 
     override fun isAvailable(request: HttpServletRequest, build: SBuild): Boolean =
-        ReportTabUtil.isAvailable(build, START_PAGE)
+        ReportTabUtil.isAvailable(build, REPORT_START_PAGE)
 }

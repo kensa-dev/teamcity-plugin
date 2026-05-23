@@ -7,4 +7,6 @@
 
     <bean id="kensaBuildFeature" class="dev.kensa.teamcity.server.KensaBuildFeature"/>
     <bean id="kensaReportTabExtension" class="dev.kensa.teamcity.server.KensaReportTabExtension"/>
+    <bean id="kensaQuickOpenFragment" class="dev.kensa.teamcity.server.KensaQuickOpenFragment"/>
+    <bean id="kensaBuildActionExtension" class="dev.kensa.teamcity.server.KensaBuildActionExtension"/>
 </beans>

@@ -39,7 +39,11 @@ class KensaAgentLifecycleAdapter(
         val params = feature.parameters
         val checkoutDir = runningBuild.checkoutDirectory
 
-        val outputDir = KensaPaths.resolve(checkoutDir, params[KensaConstants.PARAM_OUTPUT_PATH]) ?: run {
+        val outputDir = KensaPaths.resolve(
+            checkoutDir,
+            params[KensaConstants.PARAM_OUTPUT_PATH],
+            onEvent = { event -> reportResolution(log, event) },
+        ) ?: run {
             log.message("Kensa: no output directory found, skipping")
             return
         }
@@ -94,6 +98,27 @@ class KensaAgentLifecycleAdapter(
         } catch (e: Exception) {
             runningBuild.buildLogger.warning("Kensa: malformed ${resultsFile.name} (${e.message}), skipping failure summary for this class")
             null
+        }
+    }
+
+    private fun reportResolution(log: BuildProgressLogger, event: KensaPaths.ResolutionEvent) {
+        when (event) {
+            is KensaPaths.ResolutionEvent.WalkResolved ->
+                log.message("Kensa: discovered output at ${event.resolvedDir.absolutePath} (not at the default ${KensaPaths.DEFAULT_SITE_PATH} or ${KensaPaths.DEFAULT_OUTPUT_PATH})")
+            is KensaPaths.ResolutionEvent.MultipleSiteRoots ->
+                log.warning(
+                    "Kensa: found ${event.candidates.size} site directories with manifest.json — " +
+                    "using ${event.picked.absolutePath} (freshest). " +
+                    "Set the build-feature parameter '${KensaConstants.PARAM_OUTPUT_PATH}' to override. " +
+                    "Candidates: ${event.candidates.joinToString { if (it == event.picked) "${it.absolutePath} (picked)" else it.absolutePath }}"
+                )
+            is KensaPaths.ResolutionEvent.MultipleNonSiteOutputs ->
+                log.warning(
+                    "Kensa: found ${event.candidates.size} non-site output directories with indices.json and no aggregate manifest.json. " +
+                    "Multi-module aggregation requires site mode — enable 'kensa { site = true }' on the root project. " +
+                    "Using ${event.picked.absolutePath}. " +
+                    "Candidates: ${event.candidates.joinToString { if (it == event.picked) "${it.absolutePath} (picked)" else it.absolutePath }}"
+                )
         }
     }
 }
