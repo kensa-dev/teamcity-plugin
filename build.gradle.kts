@@ -142,7 +142,9 @@ abstract class PublishPluginTask : DefaultTask() {
             "-F", "file=@${zip.absolutePath}",
         )
         notes.orNull?.takeIf { it.isNotBlank() }?.let {
-            cmd += listOf("-F", "notes=$it")
+            // --form-string (vs -F) so curl doesn't interpret a leading `<` or
+            // `@` in the HTML body as a filename to read from.
+            cmd += listOf("--form-string", "notes=$it")
         }
         cmd += "https://plugins.jetbrains.com/plugin/uploadPlugin"
 
