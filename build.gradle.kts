@@ -1,5 +1,6 @@
 import java.io.ByteArrayOutputStream
 import org.gradle.process.ExecOperations
+import org.jetbrains.changelog.Changelog
 import javax.inject.Inject
 
 plugins {
@@ -11,7 +12,7 @@ plugins {
 
 allprojects {
     group = "dev.kensa.teamcity"
-    version = "0.3.0"
+    version = "0.3.1"
 }
 
 changelog {
@@ -118,6 +119,10 @@ abstract class PublishPluginTask : DefaultTask() {
     @get:org.gradle.api.tasks.Input
     abstract val xmlId: org.gradle.api.provider.Property<String>
 
+    @get:org.gradle.api.tasks.Input
+    @get:org.gradle.api.tasks.Optional
+    abstract val notes: org.gradle.api.provider.Property<String>
+
     @get:org.gradle.api.tasks.Internal
     abstract val publishToken: org.gradle.api.provider.Property<String>
 
@@ -129,15 +134,20 @@ abstract class PublishPluginTask : DefaultTask() {
         require(zip.isFile) { "Signed plugin not found at $zip (run :signPlugin first)" }
 
         val stdout = ByteArrayOutputStream()
+        val cmd = mutableListOf(
+            "curl", "-fsSL",
+            "-X", "POST",
+            "-H", "Authorization: Bearer $token",
+            "-F", "xmlId=${xmlId.get()}",
+            "-F", "file=@${zip.absolutePath}",
+        )
+        notes.orNull?.takeIf { it.isNotBlank() }?.let {
+            cmd += listOf("-F", "notes=$it")
+        }
+        cmd += "https://plugins.jetbrains.com/plugin/uploadPlugin"
+
         val result = execOps.exec {
-            commandLine(
-                "curl", "-fsSL",
-                "-X", "POST",
-                "-H", "Authorization: Bearer $token",
-                "-F", "xmlId=${xmlId.get()}",
-                "-F", "file=@${zip.absolutePath}",
-                "https://plugins.jetbrains.com/plugin/uploadPlugin",
-            )
+            commandLine(cmd)
             standardOutput = stdout
             isIgnoreExitValue = true
         }
@@ -158,4 +168,17 @@ tasks.register<PublishPluginTask>("publishPlugin") {
     // bare; only the marketplace upload needs the prefix.
     xmlId.set("teamcity_kensa-teamcity-plugin")
     publishToken.set(providers.environmentVariable("PUBLISH_TOKEN"))
+
+    val changelog = project.changelog
+    val pluginVersion = project.version.toString()
+    notes.set(provider {
+        with(changelog) {
+            renderItem(
+                (getOrNull(pluginVersion) ?: getUnreleased())
+                    .withHeader(false)
+                    .withEmptySections(false),
+                Changelog.OutputType.HTML,
+            )
+        }
+    })
 }
