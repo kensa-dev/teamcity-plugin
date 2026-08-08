@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.3.0"
+kotlin = "2.4.10"
 teamcity = "2025.07"
 gson = "2.11.0"
 junit = "5.11.3"
