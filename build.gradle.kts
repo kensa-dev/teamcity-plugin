@@ -135,7 +135,10 @@ abstract class PublishPluginTask : DefaultTask() {
 
         val stdout = ByteArrayOutputStream()
         val cmd = mutableListOf(
-            "curl", "-fsSL",
+            // --fail-with-body (not -f): still exit non-zero on HTTP errors, but
+            // keep the response body — the marketplace explains rejections there.
+            "curl", "-sSL", "--fail-with-body",
+            "-w", "\nHTTP %{http_code}",
             "-X", "POST",
             "-H", "Authorization: Bearer $token",
             "-F", "xmlId=${xmlId.get()}",
