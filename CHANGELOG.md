@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Duplicate failed-test entries in the build overview** — the test
+  reporter published Kensa tests to TeamCity under
+  `ClassName.Display Name`, while the test runner (Gradle/JUnit) had
+  already reported the same tests as `ClassName.methodName`. TeamCity
+  keys tests by full name, so every Kensa test was counted twice and
+  each failure appeared as two distinct failed tests. The reporter now
+  uses the method name, so its events merge with the runner's and the
+  Kensa failure narrative attaches to the existing test entry.
+
 ## [0.3.1]
 
 ### Added
