@@ -15,7 +15,7 @@ class KensaResultPublisherTest {
 
         KensaResultPublisher(sink, resolver).publish(indices)
 
-        val name = "com.example.FooTest.the happy path passes"
+        val name = "com.example.FooTest.passes"
         assertEquals(
             listOf(
                 "testStarted name='$name'",
@@ -36,8 +36,8 @@ class KensaResultPublisherTest {
 
         KensaResultPublisher(sink, resolver).publish(indices)
 
-        val passingName = "com.example.FooTest.the happy path passes"
-        val failingName = "com.example.FooTest.the unhappy path fails"
+        val passingName = "com.example.FooTest.passes"
+        val failingName = "com.example.FooTest.fails"
         assertTrue(sink.events.contains("testStarted name='$passingName'"))
         assertTrue(sink.events.contains("testFinished name='$passingName'"))
         assertTrue(sink.events.contains("testStarted name='$failingName'"))

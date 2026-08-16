@@ -23,7 +23,9 @@ class KensaResultPublisher(
 
     private fun publishMethod(className: String, method: IndexNode) {
         val testMethod = method.testMethod ?: return
-        val tcName = "$className.${method.displayName}"
+        // Must match the name the test runner already reported under, so TeamCity
+        // merges this with the runner's result instead of counting a second test.
+        val tcName = "$className.$testMethod"
 
         sink.testStarted(tcName)
 
