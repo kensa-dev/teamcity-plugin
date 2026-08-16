@@ -3,7 +3,7 @@
     <info>
         <name>kensa-teamcity-plugin</name>
         <display-name>Kensa Integration</display-name>
-        <version>0.3.1</version>
+        <version>@Plugin_Version@</version>
         <description><![CDATA[
             Surfaces Kensa BDD test reports inside TeamCity.
 

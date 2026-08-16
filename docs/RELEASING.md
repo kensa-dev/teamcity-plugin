@@ -21,8 +21,9 @@ the values can be copy-pasted between repos:
 1. **Add notes** to the `[Unreleased]` section of `CHANGELOG.md` describing
    what's new in the upcoming version. Commit + push to `master`.
 
-2. **Bump version** in `build.gradle.kts` (`version = "X.Y.Z"`) and
-   `teamcity-plugin.xml` (`<version>X.Y.Z</version>`). Commit + push.
+2. **Bump version** in `build.gradle.kts` (`version = "X.Y.Z"`). Commit +
+   push. (`teamcity-plugin.xml` carries an `@Plugin_Version@` token that the
+   build stamps from `project.version` — do not hardcode a version there.)
 
 3. The **Build** workflow (`.github/workflows/build.yml`) runs on the push:
    - `:server:serverPlugin` (assembles the plugin zip)
